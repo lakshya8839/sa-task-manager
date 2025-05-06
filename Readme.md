@@ -1,5 +1,5 @@
 # 📝 SA Task Manager
-
+![SmartReview - AI Code Review Assistant - Google Chrome 5_6_2025 4_11_24 PM](https://github.com/user-attachments/assets/3667927b-bd16-4e1c-85a6-cc713833d8f0)
 A simple, responsive Flask-based task manager where you can:
 
 - ✅ Add tasks with a due date and category  
