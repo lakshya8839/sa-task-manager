@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div id="app-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>SA Task Manager</h2>
+      <nav>
+        <a href="#">Dashboard</a>
+        <a href="#">Tasks</a>
+        <a href="#">Settings</a>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="task_box">
+        <div class="task_box_title">
+          <h1>Task Manager</h1>
+        </div>
+
+        <!-- Add Task Form -->
+        <form method="POST" action="/" class="add-task-form">
+          <div class="form-row">
+            <input type="text" name="task" placeholder="Enter new task" required />
+            <input type="date" name="due_date" />
+          </div>
+          <div class="form-row">
+            <select name="category">
+              <option value="">Select Category</option>
+              <option value="Work">Work</option>
+              <option value="Personal">Personal</option>
+              <option value="School">School/College</option>
+            </select>
+            <button type="submit">Add Task</button>
+          </div>
+        </form>
+
+        <!-- Task List -->
+        <div class="task-list">
+          {% for task in tasks %}
+            <div class="task-item {% if task.completed %}completed{% endif %}">
+              <span>{{ task.name }}</span>
+
+              {% if task.due_date %}
+                <small style="margin-left: 10px; color: #6b7280;">
+                  (Due: {{ task.due_date }})
+                </small>
+              {% endif %}
+
+              {% if task.category %}
+                <small style="margin-left: 10px; font-style: italic; color: #10b981;">
+                  [{{ task.category }}]
+                </small>
+              {% endif %}
+
+              <div class="task-actions">
+                {% if not task.completed %}
+                  <form method="POST" action="/complete-task/{{ task.id }}" style="display:inline;">
+                    <button title="Complete">✔️</button>
+                  </form>
+                {% endif %}
+                <form method="POST" action="/delete-task/{{ task.id }}" style="display:inline;">
+                  <button type="submit" title="Delete" class="delete-btn">🗑️</button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
